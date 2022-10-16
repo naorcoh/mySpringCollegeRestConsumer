@@ -3,10 +3,8 @@ package com.example.RestConsumer.controller;
 import com.example.RestConsumer.model.Contact;
 import com.example.RestConsumer.service.RestConsumerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -20,8 +18,13 @@ public class ConsumerRestController {
     @Autowired
     private RestTemplate restTemplate;
 
-    @GetMapping("getInquiries")
+    @GetMapping("/getInquiries")
     public List<Contact> getInquiries(@RequestParam String status) {
         return consumerService.getInquiries(status);
+    }
+
+    @PostMapping("/saveInquiry")
+    public ResponseEntity<Contact> save(@RequestBody Contact contact) {
+        return consumerService.saveInquiry(contact);
     }
 }
